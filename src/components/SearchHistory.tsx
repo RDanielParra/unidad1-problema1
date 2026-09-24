@@ -1,34 +1,28 @@
 import '../styles/SearchHistory.css'
-import { SearchChip } from './SearchChip.tsx'
+import { SearchChip } from './SearchChip'
 
-export function SearchHistory() {
+interface SearchHistoryProps {
+  history: string[]
+  currentQuery: string
+  onSelectQuery: (term: string) => void
+}
+
+export function SearchHistory({ history, currentQuery, onSelectQuery }: SearchHistoryProps) {
+  if (history.length === 0) return null
+
   return (
     <section className="search-history" aria-label="Búsquedas realizadas">
       <h2 className="search-history__title">Búsquedas</h2>
       <ul className="search-history__list">
-        <li>
-          <SearchChip />
-        </li>
-        <li>
-          <button className="search-chip" type="button">
-            dogs
-          </button>
-        </li>
-        <li>
-          <button className="search-chip" type="button">
-            coding
-          </button>
-        </li>
-        <li>
-          <button className="search-chip" type="button">
-            pizza
-          </button>
-        </li>
-        <li>
-          <button className="search-chip" type="button">
-            dance
-          </button>
-        </li>
+        {history.map((term) => (
+          <li key={term}>
+            <SearchChip
+              term={term}
+              isActive={term.toLowerCase() === currentQuery.toLowerCase()}
+              onClick={onSelectQuery}
+            />
+          </li>
+        ))}
       </ul>
     </section>
   )

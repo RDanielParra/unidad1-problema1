@@ -1,16 +1,23 @@
 import '../styles/GifCard.css'
+import { type Gif } from '../types/gif'
 
-export function GifCard() {
+interface GifCardProps {
+  gifDado: Gif
+}
+
+export function GifCard({ gifDado }: GifCardProps) {
   return (
     <article className="gif-card">
       <img
         className="gif-card__image"
-        src="https://media.giphy.com/media/JIX9t2j0ZTN9S/200w.gif"
-        alt="Cat on Laptop"
+        src={gifDado.images.original.url}
+        alt={gifDado.title || 'GIF'}
       />
       <div className="gif-card__body">
-        <h3 className="gif-card__title">Cat on Laptop</h3>
-        <p className="gif-card__username">@giphy</p>
+        <h3 className="gif-card__title">{gifDado.title || 'Sin título'}</h3>
+        <p className="gif-card__username">
+          {gifDado.username ? `@${gifDado.username}` : 'Anónimo'}
+        </p>
       </div>
     </article>
   )
